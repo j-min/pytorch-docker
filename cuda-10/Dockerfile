@@ -1,15 +1,17 @@
-FROM anibali/pytorch:cuda-10.0
+FROM pytorch/pytorch:1.0-cuda10.0-cudnn7-runtime
 
-RUN sudo apt-get update
+RUN apt-get update
 
-RUN sudo apt-get install build-essential -y
+RUN apt-get install build-essential -y
 
-RUN curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+RUN curl -L https://cpanmin.us | perl - App::cpanminus
 
-RUN sudo apt-get install expat -y
-RUN sudo apt-get install libexpat1-dev -y
+RUN apt-get install expat -y
+RUN apt-get install libexpat1-dev -y
 
 RUN cpanm XML::DOM
 
-RUN conda install nltk pandas tqdm \
+RUN conda install pandas tqdm \
  && conda clean -ya
+
+RUN pip install nltk==3.4
